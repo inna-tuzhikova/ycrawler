@@ -18,10 +18,8 @@ def run_crawler(
     crawl = YCrawler(save_path, download_interval)
     try:
         crawl.run_forever()
-    except KeyboardInterrupt:
-        log.info('Shutting down crawler...')
-        crawl.shutdown()
-        log.info('Crawler is shut down')
     except Exception as e:
         log.exception('Unexpected error %s', e)
         exit(1)
+    else:
+        log.info('Crawler is stopped')
