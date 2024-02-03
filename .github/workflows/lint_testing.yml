@@ -20,4 +20,4 @@ jobs:
       run: docker-compose build
 
     - name: Run linters and tests
-      run: docker-compose run memc_load_lint_test
+      run: docker-compose run ycrawler_lint_test
