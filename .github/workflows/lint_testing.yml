@@ -1,0 +1,23 @@
+name: Testing and linting Ycrawler
+
+on:
+#  pull_request:
+#    branches:
+#      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run test suite
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_FILE: docker-compose.ci.yml
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build docker images
+      run: docker-compose build
+
+    - name: Run linters and tests
+      run: docker-compose run memc_load_lint_test
