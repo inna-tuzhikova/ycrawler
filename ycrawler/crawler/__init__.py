@@ -1,5 +1,5 @@
-from pathlib import Path
 import logging
+from pathlib import Path
 
 from ycrawler.crawler.crawler import YCrawler
 from ycrawler.crawler.logger import init_logging

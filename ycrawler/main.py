@@ -1,5 +1,5 @@
-from pathlib import Path
 from argparse import ArgumentParser
+from pathlib import Path
 
 from ycrawler.crawler import run_crawler
 
