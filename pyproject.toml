@@ -16,6 +16,7 @@ beautifulsoup4 = "4.12.3"
 [tool.poetry.group.dev.dependencies]
 flake8 = "^7.0.0"
 isort = "^5.13.2"
+flake8-pyproject = "^1.2.3"
 
 [build-system]
 requires = ["poetry-core"]

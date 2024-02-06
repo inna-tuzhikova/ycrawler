@@ -1,14 +1,14 @@
 name: Testing and linting Ycrawler
 
 on:
-#  pull_request:
-#    branches:
-#      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  test:
-    name: Run test suite
+  linters:
+    name: Run linters
     runs-on: ubuntu-latest
     env:
       COMPOSE_FILE: docker-compose.ci.yml
@@ -19,5 +19,5 @@ jobs:
     - name: Build docker images
       run: docker-compose build
 
-    - name: Run linters and tests
-      run: docker-compose run ycrawler_lint_test
+    - name: Run linters
+      run: docker-compose run ycrawler_lint
