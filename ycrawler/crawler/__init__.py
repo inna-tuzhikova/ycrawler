@@ -11,6 +11,7 @@ def run_crawler(
     verbose: bool,
     log_output: Path | None
 ) -> None:
+    """Runs crawler with given options"""
     init_logging(log_output, verbose)
     log = logging.getLogger(__name__)
     log.info('YCrawler is about to start!')

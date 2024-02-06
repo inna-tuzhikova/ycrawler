@@ -17,6 +17,7 @@ NewsInfo = namedtuple('NewsInfo', ['id', 'url', 'related_urls'])
 
 
 class YCrawler:
+    """Downloads fresh news from news.ycombinator.com with specified interval"""
     _BASE_URL = 'https://news.ycombinator.com'
 
     def __init__(self, save_path: Path, download_interval: int):
@@ -31,11 +32,13 @@ class YCrawler:
         self._semaphore = asyncio.Semaphore(1)
 
     def run_forever(self) -> None:
+        """Runs crawler in asyncio event loop"""
         if self._running:
             raise RuntimeError('Crawler is already running')
         asyncio.run(self._run_forever_async())
 
     async def _run_forever_async(self):
+        """Restarts downloads every `download_interval` seconds"""
         self._running = True
         for s in (signal.SIGHUP, signal.SIGTERM, signal.SIGINT):
             asyncio.get_running_loop().add_signal_handler(
@@ -53,10 +56,12 @@ class YCrawler:
         await asyncio.wait(active_downloads)
 
     async def _shutdown(self):
+        """Stops rerun of download"""
         logger.info('Gracefully shutdown: resolve all current downloads')
         self._running = False
 
     async def _download_news(self):
+        """Coro for downloading fresh news"""
         begin = time.time()
         logger.info('Checking for fresh news...')
         self._prepare_sessions()
@@ -169,6 +174,7 @@ class YCrawler:
                     self._find_related_urls_in_comments(comments_page)
                 )
             finally:
+                # To avoid 503 error protecting from ddos
                 await asyncio.sleep(2)
 
     def _find_related_urls_in_comments(self, comments_page: str) -> set[str]:
