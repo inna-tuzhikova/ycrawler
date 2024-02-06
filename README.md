@@ -5,5 +5,5 @@ with asyncio
 ## Run dev
 `docker-compose up --build`
 
-## Run tests and linters
+## Run linters
 `docker-compose -f docker-compose.ci.yml up --build`
