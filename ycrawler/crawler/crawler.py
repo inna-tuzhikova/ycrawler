@@ -30,7 +30,7 @@ class YCrawler:
         self._downloaded_urls = 0
         self._semaphore = asyncio.Semaphore(1)
 
-    def run_forever(self):
+    def run_forever(self) -> None:
         if self._running:
             raise RuntimeError('Crawler is already running')
         asyncio.run(self._run_forever_async())
@@ -93,7 +93,7 @@ class YCrawler:
         )
         self._downloaded_urls = 0
 
-    async def _finalize_sessions(self) -> None:
+    async def _finalize_sessions(self):
         await self._yc_session.close()
         await self._related_session.close()
 
@@ -126,7 +126,7 @@ class YCrawler:
         self,
         news_to_download: list[NewsInfo],
         download_results: list[Task]
-    ):
+    ) -> None:
         total_news = len(news_to_download)
         downloaded_news = len([
             n
@@ -151,7 +151,7 @@ class YCrawler:
         )
         await self._dump_news(news_info)
 
-    async def _get_related_urls(self, news_info: NewsInfo) -> None:
+    async def _get_related_urls(self, news_info: NewsInfo):
         error_msg_template = 'Unable to get news=%s comments: %s'
         async with self._semaphore:
             req_params = dict(params=dict(id=news_info.id))
@@ -182,7 +182,7 @@ class YCrawler:
                 result.add(url)
         return result
 
-    async def _dump_news(self, news_info: NewsInfo) -> None:
+    async def _dump_news(self, news_info: NewsInfo):
         logger.info('Dumping %s', news_info.id)
         news_path = self._save_path / f'{news_info.id}'
         news_path.mkdir(parents=True, exist_ok=True)
@@ -196,7 +196,7 @@ class YCrawler:
         ))
         await asyncio.gather(*tasks, return_exceptions=True)
 
-    async def _dump_url(self, url: str, save_path: Path, stat: bool) -> None:
+    async def _dump_url(self, url: str, save_path: Path, stat: bool):
         try:
             if 'ycombinator' not in url:
                 async with self._related_session.get(url) as response:

@@ -4,7 +4,7 @@ from pathlib import Path
 from ycrawler.crawler import run_crawler
 
 
-def main():
+def main() -> None:
     parser = ArgumentParser('Downloads news from `news.ycombinator.com`')
     parser.add_argument('save_path', type=Path,
                         help='Path to save downloaded news')
