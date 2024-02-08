@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  ycrawler_lint:
+    build:
+        context: .
+        dockerfile: Dockerfile.ci

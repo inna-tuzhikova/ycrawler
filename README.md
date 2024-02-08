@@ -2,3 +2,8 @@
 
 Crawling news from [news.ycombinator.com](https://news.ycombinator.com) 
 with asyncio
+## Run dev
+`docker-compose up --build`
+
+## Run linters
+`docker-compose -f docker-compose.ci.yml up --build`
